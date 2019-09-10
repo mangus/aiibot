@@ -32,7 +32,7 @@ def get_5minutes_all_data(start_1hour_datetime): # May need optimizing
 
         url = "https://www.bitmex.com/api/v1/trade?symbol=XBT&count=500&columns=price&startTime=" + start_5minutes_datetime.isoformat() \
           + "&endTime=" + end_5minutes_datetime.isoformat() + "&start=" + str(start)
-        print(url)
+        # print(url)
         
         r = requests.get(url)
         one_query_data = r.json()

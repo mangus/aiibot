@@ -40,12 +40,11 @@ while (True):
         else:
             right_or_wrong = 'WRONG'
             reality = 'UP'
-    print("\nSo, the current prediction was... " + right_or_wrong)    
+    print("The current prediction was... " + right_or_wrong + "\n")
 
     csv_row = prediction_start_time.isoformat() + "," + str(price_in_beginning) + "," + str(price_1min_later) + "," + str(price_diff) + "," \
          + str(prediction[0]) + "," + reality + "," + right_or_wrong + "\n"
     with open('predictions.csv','a') as fd:
         fd.write(csv_row)
 
-    print("\n")
 
