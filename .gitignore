@@ -1,2 +1,5 @@
 export.pkl
 now.png
+log.txt
+predictions.csv
+__pycache__
