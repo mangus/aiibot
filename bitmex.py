@@ -32,7 +32,7 @@ def get_5minutes_all_data(start_1hour_datetime): # May need optimizing
 
         url = "https://www.bitmex.com/api/v1/trade?symbol=XBT&count=500&columns=price&startTime=" + start_5minutes_datetime.isoformat() \
           + "&endTime=" + end_5minutes_datetime.isoformat() + "&start=" + str(start)
-        # print(url)
+        print(url)
         
         r = requests.get(url)
         one_query_data = r.json()
@@ -46,6 +46,11 @@ def get_5minutes_all_data(start_1hour_datetime): # May need optimizing
         else:
             print("WTF, error.")
             sys.exit()
+
+        print("x-ratelimit-remaining: %d " % (int(r.headers["x-ratelimit-remaining"])))
+        if int(r.headers["x-ratelimit-remaining"]) < 5:
+            print("Waiting 10 seconds to say in 30/requests per minute...")
+            time.sleep(10)
 
     return data_5minutes_all
 

@@ -55,14 +55,18 @@ def plot_one_image(data_1day, data_1hour, data_5minutes_all, image_filename, sta
     max_5minutes = -sys.maxsize
 
     for query_data in data_5minutes_all:
+        one_query_x = one_query_y = []
         for index, trade_point in enumerate(query_data, start=0):
             price = trade_point['price']
-            plot_5minutes_x = plot_5minutes_x + [trade_point['timestamp']]
-            plot_5minutes_y = plot_5minutes_y + [price]
+            one_query_x = one_query_x + [trade_point['timestamp']]
+            one_query_y = one_query_y + [price]
             if price < min_5minutes:
                 min_5minutes= price
             if price > max_5minutes:
                 max_5minutes = price
+
+        plot_5minutes_x = plot_5minutes_x + one_query_x
+        plot_5minutes_y = plot_5minutes_y + one_query_y
         
     diff_1day = max_1day - min_1day
     red_1day = min((diff_1day / max_1day) * 10, 1)
