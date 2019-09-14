@@ -6,7 +6,7 @@ import plotter
 
 print("Aii v3 will rule (the wooorld)! Creating dataset...")
 
-start_datetime = datetime.datetime(2019, 9, 10, 0, 0, 0)
+start_datetime = datetime.datetime(2018, 1, 1, 0, 0, 0)
 very_start_datetime = start_datetime
 while (True):
 
@@ -37,9 +37,9 @@ while (True):
     # + 24 hours (do not use current data)
     start_datetime = start_datetime + datetime.timedelta(days=1)
     # + random (up to 24 hours) to get a random beginning in day
-    start_datetime = start_datetime + datetime.timedelta(seconds=random.randint(1, 24*3600))
+    start_datetime = start_datetime + datetime.timedelta(minutes=random.randint(1, 24*60))
 
     if (start_datetime + datetime.timedelta(hours=24) > datetime.datetime.now()):
         print("Reached ~now, going back to beginning for the next round...")
-        start_datetime = very_start_datetime + datetime.timedelta(seconds=random.randint(1, 24*3600))
+        start_datetime = very_start_datetime + datetime.timedelta(minutes=random.randint(1, 24*60))
 
