@@ -3,7 +3,7 @@ import requests
 import datetime
 from bitmex_websocket import BitMEXWebsocket
 
-ws = BitMEXWebsocket(endpoint="https://testnet.bitmex.com/api/v1", symbol="XBTUSD", api_key=None, api_secret=None)
+ws = BitMEXWebsocket(endpoint="https://www.bitmex.com/api/v1", symbol="XBTUSD", api_key=None, api_secret=None)
 ws.get_instrument()
 
 def get_current_price():
