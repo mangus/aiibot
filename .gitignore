@@ -3,3 +3,4 @@ now.png
 log.txt
 predictions.csv
 __pycache__
+dataset/*
