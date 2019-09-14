@@ -6,11 +6,11 @@ import plotter
 
 print("Aii v3 will rule (the wooorld)! Creating dataset...")
 
-start_datetime = datetime.datetime(2018, 1, 1, 0, 0, 0)
+start_datetime = datetime.datetime(2019, 9, 10, 0, 0, 0)
 very_start_datetime = start_datetime
 while (True):
 
-    print("\n\n%s" % (start_datetime.isoformat()))
+    print("\n%s" % (start_datetime.isoformat()))
 
     data_1day = bitmex.get_1day_data(start_datetime, print_info=True)
 
@@ -40,6 +40,6 @@ while (True):
     start_datetime = start_datetime + datetime.timedelta(seconds=random.randint(1, 24*3600))
 
     if (start_datetime + datetime.timedelta(hours=24) > datetime.datetime.now()):
-        print("Reached NOW, going back to beginning for the next round...")
+        print("Reached ~now, going back to beginning for the next round...")
         start_datetime = very_start_datetime + datetime.timedelta(seconds=random.randint(1, 24*3600))
 
