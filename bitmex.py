@@ -4,7 +4,7 @@ import datetime
 import time
 from bitmex_websocket import BitMEXWebsocket
 
-ws = BitMEXWebsocket(endpoint="https://www.bitmex.com/api/v1", symbol="XBTUSD", api_key=None, api_secret=None)
+ws = BitMEXWebsocket(endpoint="wss://www.bitmex.com/realtime", symbol="XBTUSD", api_key=None, api_secret=None)
 ws.get_instrument()
 
 def get_current_price():
@@ -56,7 +56,7 @@ def get_5minutes_all_data(start_5minutes_datetime, print_info=True, limit=True):
             sys.exit()
 
         if (limit):
-            if int(r.headers["x-ratelimit-remaining"]) < 10:
+            if "x-ratelimit-remaining" in r.headers and int(r.headers["x-ratelimit-remaining"]) < 10:
                 print("x-ratelimit-remaining below 10, waiting 10 seconds to say in 30/requests per minute...")
                 time.sleep(10)
 
