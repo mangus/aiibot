@@ -13,7 +13,10 @@ def get_current_price():
 
 def print_request_info(request):
     print("URL: " + request.url)
-    print("x-ratelimit-remaining: %d " % (int(request.headers["x-ratelimit-remaining"])))
+    if "x-ratelimit-remaining" in request.headers:
+        print("x-ratelimit-remaining: %d " % (int(request.headers["x-ratelimit-remaining"])))
+    else:
+        print("x-ratelimit-remaining: HEADER DOES NOT EXIST!")
 
 def get_1day_data(start_datetime, print_info=False):
     url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=5m&partial=false&symbol=XBT&count=288&startTime=" + start_datetime.isoformat()
