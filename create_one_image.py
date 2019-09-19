@@ -15,10 +15,10 @@ start_datetime = datetime.datetime.now(datetime.timezone.utc) - datetime.timedel
 print("%s" % (start_datetime.isoformat()))
 sys.stdout.flush()
 
-data_1day = bitmex.get_1day_data(start_datetime, print_info=True)
+data_1day = bitmex.get_1day_data(start_datetime)
 
 start_1hour_datetime = start_datetime + datetime.timedelta(hours=23)
-data_1hour = bitmex.get_1hour_data(start_1hour_datetime, print_info=True)
+data_1hour = bitmex.get_1hour_data(start_1hour_datetime)
 
 #start_5minutes_datetime = start_1hour_datetime + datetime.timedelta(minutes=55)
 #data_5minutes_all = bitmex.get_5minutes_all_data(start_5minutes_datetime)

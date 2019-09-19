@@ -31,14 +31,13 @@ while (True):
     price_in_beginning = bitmex_delta.get_current_price()
     print("Price right now: " + str(price_in_beginning))
 
-    print("Making prediction based on image created (now.png)...")
     prediction = predictor.predict_image('now.png')
     convert_hack = str(prediction[0])
     predicted_price_diff = float(convert_hack[1:-1])
-
     print("Aii predicted price change for 1 minute: " + str(predicted_price_diff))
     predicted_movement_class = classify_price_movement(predicted_price_diff)
     print("That is in class of " + predicted_movement_class)
+
     trade = None
     if ("GOOD_UP" == predicted_movement_class):
         trade = trader.Trade(price_in_beginning)

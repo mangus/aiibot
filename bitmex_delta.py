@@ -15,8 +15,7 @@ def get_last_5minutes():
     url = endpoint + "/trade?symbol=XBTUSD"
     r = requests.get(url)
     data = r.json()
-    if (len(data) < 9999):
-        print("!!! Delta server does not have enought historical data (5 minutes needed) !!!")
+    check_data(data)
     last_5min_data = filter_last_5minutes(data)
     data_5minutes_all = []
     data_5minutes_all.append(last_5min_data)
@@ -41,4 +40,11 @@ def find_5minutes_index(all_data):
             index = index + step
         check_datetime = datetime.datetime.fromisoformat(all_data[index]["timestamp"][:-5])
     return index
+
+def check_data(data):
+    past_5minutes = datetime.datetime.fromisoformat(data[len(data) - 1]["timestamp"][:-5]) \
+        - datetime.timedelta(minutes=5)
+    oldest_info = datetime.datetime.fromisoformat(data[0]["timestamp"][:-5])
+    if (oldest_info > past_5minutes):
+        print("WARNING !!! Delta server does NOT have enought historical data (5 minutes needed) !!! WARNING")
 
