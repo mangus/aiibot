@@ -4,14 +4,14 @@ import time
 import datetime
 from fastai.vision import *
 import bitmex
+import bitmex_delta
 import aii.predict as predictor
 
 while (True):
 
     os.system('python create_one_image.py')
-
-    prediction_start_time = now_time = datetime.datetime.now() - datetime.timedelta(hours=3) # timezone
-    price_in_beginning = bitmex.get_current_price()
+    prediction_start_time = now_time = datetime.datetime.now(datetime.timezone.utc)
+    price_in_beginning = bitmex_delta.get_current_price()
     print("Price right now: " + str(price_in_beginning))
 
     prediction = predictor.predict_image('now.png')
@@ -20,7 +20,7 @@ while (True):
     print("Aii prediction for 1 minute: " + str(prediction[0]))
     time.sleep(60)
 
-    price_1min_later = bitmex.get_current_price()
+    price_1min_later = bitmex_delta.get_current_price()
     print("Price 1 minute later: " + str(price_1min_later))
 
     price_diff = price_1min_later - price_in_beginning

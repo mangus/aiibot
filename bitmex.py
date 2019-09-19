@@ -19,14 +19,14 @@ def print_request_info(request):
         print("x-ratelimit-remaining: HEADER DOES NOT EXIST!")
 
 def get_1day_data(start_datetime, print_info=False):
-    url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=5m&partial=false&symbol=XBT&count=288&startTime=" + start_datetime.isoformat()
+    url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=5m&partial=false&symbol=XBT&count=288&startTime=" + start_datetime.isoformat()[:-9]
     r = requests.get(url)
     if (print_info):
         print_request_info(r)
     return r.json()
 
 def get_1hour_data(start_datetime, print_info=False, count=60):
-    url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=1m&partial=false&symbol=XBT&count=" + str(count) + "&startTime=" + start_datetime.isoformat()
+    url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=1m&partial=false&symbol=XBT&count=" + str(count) + "&startTime=" + start_datetime.isoformat()[:-9]
     r = requests.get(url)
     if (print_info):
         print_request_info(r)
@@ -41,8 +41,8 @@ def get_5minutes_all_data(start_5minutes_datetime, print_info=True, limit=True):
     data_5minutes_all = []
     while (not have_all_data):
 
-        url = "https://www.bitmex.com/api/v1/trade?symbol=XBT&count=500&columns=price&startTime=" + start_5minutes_datetime.isoformat() \
-          + "&endTime=" + end_5minutes_datetime.isoformat() + "&start=" + str(start)        
+        url = "https://www.bitmex.com/api/v1/trade?symbol=XBT&count=500&columns=price&startTime=" + start_5minutes_datetime.isoformat()[:-9] \
+          + "&endTime=" + end_5minutes_datetime.isoformat()[:-9] + "&start=" + str(start)        
         r = requests.get(url)
         if (print_info):
             print_request_info(r)

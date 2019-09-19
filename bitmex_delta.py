@@ -2,7 +2,7 @@
 import requests
 import datetime
 
-endpoint="http://192.168.1.127:4444"
+endpoint = "http://192.168.1.127:4444"
 
 def get_current_price():
     url = endpoint + "/instrument?symbol=XBTUSD"
@@ -11,7 +11,6 @@ def get_current_price():
     return data[0]['lastPrice']
 
 def get_last_5minutes():
-    print("start 1 checkpoint")
     url = endpoint + "/trade?symbol=XBTUSD"
     r = requests.get(url)
     data = r.json()
