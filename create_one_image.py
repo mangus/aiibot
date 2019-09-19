@@ -26,4 +26,6 @@ data_5minutes_all = bitmex_delta.get_last_5minutes()
 
 plotter.plot_one_image(data_1day, data_1hour, data_5minutes_all, 'now.png', start_datetime)
 
+print("Picture (now.png) created!")
+
 sys.exit()
