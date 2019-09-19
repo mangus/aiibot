@@ -1,6 +1,7 @@
 
 import requests
 import datetime
+import sys
 
 endpoint = "http://192.168.1.127:4444"
 
@@ -14,6 +15,8 @@ def get_last_5minutes():
     url = endpoint + "/trade?symbol=XBTUSD"
     r = requests.get(url)
     data = r.json()
+    if (len(data) < 9999):
+        print("!!! Delta server does not have enought historical data (5 minutes needed) !!!")
     last_5min_data = filter_last_5minutes(data)
     data_5minutes_all = []
     data_5minutes_all.append(last_5min_data)

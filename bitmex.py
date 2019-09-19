@@ -2,14 +2,15 @@
 import requests
 import datetime
 import time
-from bitmex_websocket import BitMEXWebsocket
+# from bitmex_websocket import BitMEXWebsocket
 
-ws = BitMEXWebsocket(endpoint="wss://www.bitmex.com/realtime", symbol="XBTUSD", api_key=None, api_secret=None)
-ws.get_instrument()
+# ws = BitMEXWebsocket(endpoint="wss://www.bitmex.com/realtime", symbol="XBTUSD", api_key=None, api_secret=None)
+# ws.get_instrument()
 
-def get_current_price():
-    data = ws.get_ticker()
-    return data['last']
+# Use bitmex_delta.get_current_price() instead!
+# def get_current_price():
+#    data = ws.get_ticker()
+#    return data['last']
 
 def print_request_info(request):
     print("URL: " + request.url)

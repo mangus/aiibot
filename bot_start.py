@@ -58,7 +58,7 @@ while (True):
     print("Price difference: " + str(price_diff))
 
     if (trade):
-        trade.close_trade(price_1min_later, predicted_price_diff)
+        trade.close_trade(price_1min_later)
         print("")
     else:
         if (predicted_movement_class == classify_price_movement(price_diff)):
