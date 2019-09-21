@@ -132,7 +132,8 @@ def position_is_open():
     return json_data[0]['isOpen']
 
 def bitcoin_count_in_wallet():
-    r = requests.get(baseurl + 'user/wallet', auth=auth)
+    r = requests.get(baseurl + 'user/walletHistory', auth=auth)
     json_data = r.json()
-    return json_data['amount']
+    return json_data[0]['walletBalance']
     
+
