@@ -61,8 +61,8 @@ def get_5minutes_all_data(start_5minutes_datetime, print_info=True, limit=True):
 
     return data_5minutes_all
 
-trade_amount = 10
-stop_loss_diff = 5
+trade_amount = 400
+stop_loss_diff = 8
 
 def trade_buy(start_price):
     params={

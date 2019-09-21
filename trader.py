@@ -34,8 +34,10 @@ class Trade:
             bitmex.close_sell_trade()
             profit = self.start_price - exit_price
 
-        print("############# Closed trade theoretical profit/loss without fees: " + str(profit))
-        print("############# Wallet balance right now: >> " + str(bitmex.bitcoin_count_in_wallet() / 100000000) + " BTC <<")
+        print("Closed trade theoretical profit/loss without fees: " + str(profit))
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print("$$$ Wallet balance right now: >> " + str(bitmex.bitcoin_count_in_wallet() / 100000000) + " BTC << $$$")
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
         csv_row = datetime.datetime.now().isoformat() + "," + str(profit) + "\n"
         with open('trades.csv','a') as fd:

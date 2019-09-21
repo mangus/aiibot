@@ -12,11 +12,11 @@ import sys
 def nice_wait(seconds):
     for i in range(seconds):
         time.sleep(1)
-        print(seconds - i, end=' ', flush=True)
+        print(str(seconds - i) + "[" + str(bitmex_delta.get_current_price()) + "$]", end='..', flush=True)
     print('')
 
 def classify_price_movement(prediction):
-    if abs(prediction) > 4:
+    if abs(prediction) > 8:
         if prediction > 0:
             return "GOOD_UP"
         else:
