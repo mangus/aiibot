@@ -7,6 +7,7 @@ import bitmex
 import bitmex_delta
 import aii.predict as predictor
 import trader
+import sys
 
 def nice_wait(seconds):
     for i in range(seconds):
@@ -15,7 +16,7 @@ def nice_wait(seconds):
     print('')
 
 def classify_price_movement(prediction):
-    if abs(prediction) > 2:
+    if abs(prediction) > 4:
         if prediction > 0:
             return "GOOD_UP"
         else:
@@ -66,4 +67,5 @@ while (True):
             right_or_wrong = 'WRONG'
         print("The current prediction was... " + right_or_wrong + "\n")
 
+    sys.stdout.flush()
 

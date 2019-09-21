@@ -5,3 +5,4 @@ predictions.csv
 __pycache__
 dataset/*
 trades.csv
+test.py

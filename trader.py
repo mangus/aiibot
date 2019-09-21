@@ -1,6 +1,7 @@
 
-import bitmex_delta
+import bitmex
 import datetime
+import time
 
 class Trade:
 
@@ -15,26 +16,29 @@ class Trade:
         print("##############################################")
         print("### !!! We are going to BUY (long) now !!! ###")
         print("##############################################")
-        print("TODO: execute BUY API command.")
+        bitmex.trade_buy(self.start_price)
 
     def trade_fall(self):
         self.rise = False
         print("################################################")
         print("### !!! We are going to SELL (short) now !!! ###")
         print("################################################")
-        print("TODO: execute SELL API command.")
+        bitmex.trade_sell(self.start_price)
 
     def close_trade(self, exit_price):
-        print("TODO: execute close of all trades")
         
         if (self.rise):
+            bitmex.close_buy_trade()
             profit = exit_price - self.start_price
         else:
+            bitmex.close_sell_trade()
             profit = self.start_price - exit_price
 
-        print("############# >> Closed trade profit/loss: " + str(profit) + " <<")
+        print("############# Closed trade theoretical profit/loss without fees: " + str(profit))
+        print("############# Wallet balance right now: >> " + str(bitmex.bitcoin_count_in_wallet() / 100000000) + " BTC <<")
 
         csv_row = datetime.datetime.now().isoformat() + "," + str(profit) + "\n"
         with open('trades.csv','a') as fd:
             fd.write(csv_row)
+
 

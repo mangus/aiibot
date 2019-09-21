@@ -13,7 +13,6 @@ print("Creating one picture (data from right now)...")
 start_datetime = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=24)
 
 print("%s" % (start_datetime.isoformat()))
-sys.stdout.flush()
 
 data_1day = bitmex.get_1day_data(start_datetime)
 
@@ -28,4 +27,5 @@ plotter.plot_one_image(data_1day, data_1hour, data_5minutes_all, 'now.png', star
 
 print("Picture (now.png) created!")
 
+sys.stdout.flush()
 sys.exit()

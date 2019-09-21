@@ -2,15 +2,10 @@
 import requests
 import datetime
 import time
-# from bitmex_websocket import BitMEXWebsocket
+import bitmex_auth
 
-# ws = BitMEXWebsocket(endpoint="wss://www.bitmex.com/realtime", symbol="XBTUSD", api_key=None, api_secret=None)
-# ws.get_instrument()
-
-# Use bitmex_delta.get_current_price() instead!
-# def get_current_price():
-#    data = ws.get_ticker()
-#    return data['last']
+baseurl = 'https://www.bitmex.com/api/v1/'
+auth = bitmex_auth.APIKeyAuth()
 
 def print_request_info(request):
     print("URL: " + request.url)
@@ -20,14 +15,14 @@ def print_request_info(request):
         print("x-ratelimit-remaining: HEADER DOES NOT EXIST!")
 
 def get_1day_data(start_datetime, print_info=False):
-    url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=5m&partial=false&symbol=XBT&count=288&startTime=" + start_datetime.isoformat()[:-9]
+    url = baseurl + "trade/bucketed?binSize=5m&partial=false&symbol=XBT&count=288&startTime=" + start_datetime.isoformat()[:-9]
     r = requests.get(url)
     if (print_info):
         print_request_info(r)
     return r.json()
 
 def get_1hour_data(start_datetime, print_info=False, count=60):
-    url = "https://www.bitmex.com/api/v1/trade/bucketed?binSize=1m&partial=false&symbol=XBT&count=" + str(count) + "&startTime=" + start_datetime.isoformat()[:-9]
+    url = baseurl + "trade/bucketed?binSize=1m&partial=false&symbol=XBT&count=" + str(count) + "&startTime=" + start_datetime.isoformat()[:-9]
     r = requests.get(url)
     if (print_info):
         print_request_info(r)
@@ -42,7 +37,7 @@ def get_5minutes_all_data(start_5minutes_datetime, print_info=True, limit=True):
     data_5minutes_all = []
     while (not have_all_data):
 
-        url = "https://www.bitmex.com/api/v1/trade?symbol=XBT&count=500&columns=price&startTime=" + start_5minutes_datetime.isoformat()[:-9] \
+        url = baseurl + "trade?symbol=XBT&count=500&columns=price&startTime=" + start_5minutes_datetime.isoformat()[:-9] \
           + "&endTime=" + end_5minutes_datetime.isoformat()[:-9] + "&start=" + str(start)        
         r = requests.get(url)
         if (print_info):
@@ -66,3 +61,78 @@ def get_5minutes_all_data(start_5minutes_datetime, print_info=True, limit=True):
 
     return data_5minutes_all
 
+trade_amount = 10
+stop_loss_diff = 5
+
+def trade_buy(start_price):
+    params={
+        'symbol': 'XBTUSD',
+        'ordType': 'Market',
+        'orderQty': trade_amount
+    }
+    r = requests.post(baseurl + 'order', params=params, auth=auth)
+    print(r.json())
+    # Add stop loss
+    params={
+        'symbol': 'XBTUSD',
+        'ordType': 'Stop',
+        'orderQty': -trade_amount,
+        'stopPx': start_price - stop_loss_diff
+    }
+    r = requests.post(baseurl + 'order', params=params, auth=auth)
+    print(r.json())
+
+def close_buy_trade():
+    if position_is_open(): # Position may be closed by stop-loss order
+        params={
+            'symbol': 'XBTUSD',
+            'ordType': 'Market',
+            'orderQty': -trade_amount
+        }
+        r = requests.post(baseurl + 'order', params=params, auth=auth)
+        print(r.json())
+    # Add cancel stop loss
+    r = requests.delete(baseurl + 'order/all', auth=auth)
+    print(r.json())
+
+def trade_sell(start_price):
+    params={
+        'symbol': 'XBTUSD',
+        'ordType': 'Market',
+        'orderQty': -trade_amount
+    }
+    r = requests.post(baseurl + 'order', params=params, auth=auth)
+    print(r.json())
+    # Add stop loss
+    params={
+        'symbol': 'XBTUSD',
+        'ordType': 'Stop',
+        'orderQty': trade_amount,
+        'stopPx': start_price + stop_loss_diff
+    }
+    r = requests.post(baseurl + 'order', params=params, auth=auth)
+    print(r.json())
+
+def close_sell_trade():
+    if position_is_open(): # Position may be closed by stop-loss order
+        params={
+            'symbol': 'XBTUSD',
+            'ordType': 'Market',
+            'orderQty': trade_amount
+        }
+        r = requests.post(baseurl + 'order', params=params, auth=auth)
+        print(r.json())
+    # Add cancel stop loss
+    r = requests.delete(baseurl + 'order/all', auth=auth)
+    print(r.json())
+
+def position_is_open():
+    r = requests.get(baseurl + 'position', auth=auth)
+    json_data = r.json()
+    return json_data[0]['isOpen']
+
+def bitcoin_count_in_wallet():
+    r = requests.get(baseurl + 'user/wallet', auth=auth)
+    json_data = r.json()
+    return json_data['amount']
+    
