@@ -6,3 +6,4 @@ __pycache__
 dataset/*
 trades.csv
 test.py
+config.py

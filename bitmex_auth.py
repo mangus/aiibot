@@ -5,9 +5,7 @@ import hashlib
 import hmac
 from future.builtins import bytes
 from future.standard_library import hooks
-
-apiKey = 'k3WVQb8As2dtYjVayVXZiTSg'
-apiSecret = '0csMfyY63LKKzM7s-1Pv61eSyAUPPZUXrCPdYM3QEjglptrq'
+import config
 
 with hooks():  # Python 2/3 compat
     from urllib.parse import urlparse
@@ -18,8 +16,8 @@ class APIKeyAuth(AuthBase):
 
     def __init__(self):
         """Init with Key & Secret."""
-        self.apiKey = apiKey
-        self.apiSecret = apiSecret
+        self.apiKey = config.apiKey
+        self.apiSecret = config.apiSecret
 
     def __call__(self, r):
         """Called when forming a request - generates api key headers."""

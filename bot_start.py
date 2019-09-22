@@ -1,6 +1,5 @@
 
 import os
-import time
 import datetime
 from fastai.vision import *
 import bitmex
@@ -8,15 +7,10 @@ import bitmex_delta
 import aii.predict as predictor
 import trader
 import sys
-
-def nice_wait(seconds):
-    for i in range(seconds):
-        time.sleep(1)
-        print(str(seconds - i) + "[" + str(bitmex_delta.get_current_price()) + "$]", end='..', flush=True)
-    print('')
+import config
 
 def classify_price_movement(prediction):
-    if abs(prediction) > 8:
+    if abs(prediction) > config.good_price_movement:
         if prediction > 0:
             return "GOOD_UP"
         else:
@@ -26,15 +20,14 @@ def classify_price_movement(prediction):
 
 while (True):
 
+    bitmex.print_wallet()
     os.system('python create_one_image.py')
 
     prediction_start_time = now_time = datetime.datetime.now(datetime.timezone.utc)
     price_in_beginning = bitmex_delta.get_current_price()
     print("Price right now: " + str(price_in_beginning))
 
-    prediction = predictor.predict_image('now.png')
-    convert_hack = str(prediction[0])
-    predicted_price_diff = float(convert_hack[1:-1])
+    predicted_price_diff = predictor.predict_image('now.png')
     print("Aii predicted price change for 1 minute: " + str(predicted_price_diff))
     predicted_movement_class = classify_price_movement(predicted_price_diff)
     print("That is in class of " + predicted_movement_class)
@@ -47,25 +40,12 @@ while (True):
         trade = trader.Trade(price_in_beginning)
         trade.trade_fall()
     else:
-        print("We are not going to trade this time.")
-
-    nice_wait(60)
-
-    price_1min_later = bitmex_delta.get_current_price()
-    print("Price 1 minute later: " + str(price_1min_later))
-
-    price_diff = price_1min_later - price_in_beginning
-    print("Price difference: " + str(price_diff))
-
-    if (trade):
-        trade.close_trade(price_1min_later)
-        print("")
-    else:
-        if (predicted_movement_class == classify_price_movement(price_diff)):
-            right_or_wrong = 'RIGHT'
-        else:
-            right_or_wrong = 'WRONG'
-        print("The current prediction was... " + right_or_wrong + "\n")
+        print("We are not going to trade this time; waiting ~60 seconds...")
+        trader.nice_wait(60)
+        price_1min_later = bitmex_delta.get_current_price()
+        print("Price 1 minute later: " + str(price_1min_later))
+        price_diff = price_1min_later - price_in_beginning
+        print("Price difference: " + str(price_diff))
 
     sys.stdout.flush()
 
