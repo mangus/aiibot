@@ -129,15 +129,19 @@ def position_is_open():
     r = requests.get(baseurl + 'position', auth=auth)
     json_data = r.json()
     return json_data[0]['isOpen']
-    
-def print_wallet():
+
+def get_wallet_info():
     r = requests.get(baseurl + 'user/walletHistory', auth=auth)
     json_data = r.json()
-    bitcoin_count_in_wallet = json_data[0]['walletBalance']
-    last_transaction_amount = json_data[0]['amount']
+    print("x-ratelimit-remaining check: %d " % (int(r.headers["x-ratelimit-remaining"])))
+    return json_data[0]
+        
+def print_wallet():
+    wallet_info = get_wallet_info()
+    bitcoin_count_in_wallet = wallet_info['walletBalance']
+    last_transaction_amount = wallet_info['amount']
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     print("$$$ Wallet balance right now: >> " + str(bitcoin_count_in_wallet / 100000000) + " BTC << $$$")
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     print("$$$ Last transaction amount: " + str(last_transaction_amount))
-    print("x-ratelimit-remaining: %d " % (int(r.headers["x-ratelimit-remaining"])))
 

@@ -44,13 +44,15 @@ class Trade:
         print("### Closed trade theoretical profit/loss without fees and stop-losses: " + str(profit * config.one_trade_amount))
         print("################################################")
 
-        #csv_row = datetime.datetime.now().isoformat() + "," + str(profit) + "\n"
-        #with open('trades.csv','a') as fd:
-        #    fd.write(csv_row)
+        wallet_info = bitmex.get_wallet_info()
+        a_row = datetime.datetime.now().isoformat() + ": " + str(wallet_info['walletBalance'] / 100000000) + " BTC\n"
+        with open('wallet.log','a') as fd:
+            fd.write(csv_row)
 
     def wait_for_trade_close(self):
         print("### Now we check the market every ~60 seconds and find a good exit point... ###")
         exit_trade = False
+        no_another_close = False
         while (not exit_trade):
             nice_wait(56) # Leave some time for calculations, that's why 56 instead of 60
             if bitmex.position_is_open():

@@ -7,3 +7,4 @@ dataset/*
 trades.csv
 test.py
 config.py
+*.log
