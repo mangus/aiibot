@@ -143,5 +143,5 @@ def print_wallet():
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     print("$$$ Wallet balance right now: >> " + str(bitcoin_count_in_wallet / 100000000) + " BTC << $$$")
     print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-    print("$$$ Last transaction amount: " + str(last_transaction_amount))
+    print("$$$ Last transaction amount: " + str(last_transaction_amount) + " satoshis")
 

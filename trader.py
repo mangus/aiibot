@@ -47,7 +47,7 @@ class Trade:
         wallet_info = bitmex.get_wallet_info()
         a_row = datetime.datetime.now().isoformat() + ": " + str(wallet_info['walletBalance'] / 100000000) + " BTC\n"
         with open('wallet.log','a') as fd:
-            fd.write(csv_row)
+            fd.write(a_row)
 
     def wait_for_trade_close(self):
         print("### Now we check the market every ~60 seconds and find a good exit point... ###")
