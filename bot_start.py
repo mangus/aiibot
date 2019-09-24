@@ -40,12 +40,9 @@ while (True):
         trade = trader.Trade(price_in_beginning)
         trade.trade_fall()
     else:
-        print("We are not going to trade this time; waiting ~60 seconds...")
-        trader.nice_wait(60)
-        price_1min_later = bitmex_delta.get_current_price()
-        print("Price 1 minute later: " + str(price_1min_later))
-        price_diff = price_1min_later - price_in_beginning
-        print("Price difference: " + str(price_diff))
+        print("We are not going to trade; waiting ~10 seconds...")
+        trader.nice_wait(10)
+        price_diff = bitmex_delta.get_current_price() - price_in_beginning
 
     sys.stdout.flush()
 

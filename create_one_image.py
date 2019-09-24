@@ -8,11 +8,11 @@ import plotter
 import bitmex
 import bitmex_delta
 
-print("Creating one picture (data from right now)...")
+# print("Creating one picture (data from right now)...")
 
 start_datetime = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=24)
 
-print("%s" % (start_datetime.isoformat()))
+print("%s picture creation..." % (start_datetime.isoformat()))
 
 data_1day = bitmex.get_1day_data(start_datetime)
 
@@ -25,7 +25,7 @@ data_5minutes_all = bitmex_delta.get_last_5minutes()
 
 plotter.plot_one_image(data_1day, data_1hour, data_5minutes_all, 'now.png', start_datetime)
 
-print("Picture (now.png) created!")
+# print("Picture (now.png) created!")
 
 sys.stdout.flush()
 sys.exit()

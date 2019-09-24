@@ -6,6 +6,7 @@ import time
 import os
 import aii.predict as predictor
 import config
+import sys
 
 class Trade:
 
@@ -74,9 +75,11 @@ class Trade:
                         exit_trade = True
             else:
                 print("### Trade was automatically exited by stop-loss order!")
-                print("###########################################################")
+                print("######################################################")
                 exit_trade = True
                 no_another_close = True
+
+            sys.stdout.flush()
 
         if (not no_another_close):
             self.close_trade(bitmex_delta.get_current_price())
