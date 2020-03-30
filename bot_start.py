@@ -18,9 +18,10 @@ def classify_price_movement(prediction):
     else:
         return "AROUND_ZERO"
 
+bitmex.print_wallet()
 while (True):
 
-    bitmex.print_wallet()
+    print("")
     os.system('python create_one_image.py')
 
     prediction_start_time = now_time = datetime.datetime.now(datetime.timezone.utc)
@@ -40,8 +41,8 @@ while (True):
         trade = trader.Trade(price_in_beginning)
         trade.trade_fall()
     else:
-        print("We are not going to trade; waiting ~10 seconds...")
-        trader.nice_wait(10)
+        print("We are not going to trade; waiting ~7 seconds...")
+        trader.nice_wait(7, only_price=True)
         price_diff = bitmex_delta.get_current_price() - price_in_beginning
 
     sys.stdout.flush()

@@ -2,17 +2,16 @@
 import requests
 import datetime
 import sys
-
-endpoint = "http://192.168.1.127:4444"
+import config 
 
 def get_current_price():
-    url = endpoint + "/instrument?symbol=XBTUSD"
+    url = config.delta_endpoint + "/instrument?symbol=XBTUSD"
     r = requests.get(url)
     data = r.json()
     return data[0]['lastPrice']
 
 def get_last_5minutes():
-    url = endpoint + "/trade?symbol=XBTUSD"
+    url = config.delta_endpoint + "/trade?symbol=XBTUSD"
     r = requests.get(url)
     data = r.json()
     check_data(data)

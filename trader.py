@@ -84,7 +84,7 @@ class Trade:
         if (not no_another_close):
             self.close_trade(bitmex_delta.get_current_price())
 
-def nice_wait(seconds):
+def nice_wait(seconds, only_price=False):
     start_price = bitmex_delta.get_current_price()
     for i in range(seconds):
         time.sleep(1)
@@ -93,6 +93,12 @@ def nice_wait(seconds):
             add_plus = "+"
         else:
             add_plus = ""
-        print(str(seconds - i) + "|" + add_plus + str(price_diff) + "$", end=' ', flush=True)
+
+        if only_price:
+            print_this = add_plus + str(price_diff) + "$"
+        else:
+            print_this = str(seconds - i) + "|" + add_plus + str(price_diff) + "$"
+
+        print(print_this, end=' ', flush=True)
     print('')
 
